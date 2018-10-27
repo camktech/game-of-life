@@ -1,6 +1,6 @@
 var gen = [];
-const gridSize = 50;
-const interval = 100;
+const gridSize = 80;
+const interval = 30;
 
 $(document).ready(() => {
   $('#stage').append(boardMarkup());
@@ -21,7 +21,7 @@ function boardMarkup(){
       let cell = $('<div>');
       cell.addClass('l-cell');
       cell.attr('data-pos', `${i}-${j}`);
-      if(Math.random() > 0.5){
+      if(Math.random() > 0.9){
         cell.addClass('alive');
         gen[i].push(true);
       }
@@ -71,13 +71,29 @@ function survives(isAlive, r, c){
   let liveCount = 0;
   for(let i = -1; i < 2; i++){
     for(let j = -1; j < 2; j++){
-      if((r + i) < 0 || 
-         (c + j) < 0 || 
-         (r + i) >= gridSize || 
-         (c + j) >= gridSize){
+      let x = c + j;
+      let y = r + i;
+
+      if(i === 0 && j === 0){
         continue;
       }
-      if(gen[r+i][c+j]){
+
+
+      if((c + j) < 0){
+        x = gridSize - Math.abs(c + j);
+      }
+      else if((c + j) >= gridSize){
+        x = gridSize - (c + j);
+      }
+
+      if((r + i) < 0){
+        y = gridSize - Math.abs(r + i);
+      }
+      else if((r + i) >= gridSize){
+        y = gridSize - (r + i);
+      }
+
+      if(gen[y][x]){
         liveCount++;
       }
     }
