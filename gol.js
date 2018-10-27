@@ -1,9 +1,10 @@
 var gen = [];
 const gridSize = 50;
+const interval = 100;
 
 $(document).ready(() => {
   $('#stage').append(boardMarkup());
-  setInterval(tick, gridSize);
+  setInterval(tick, interval);
 });
 
 
@@ -36,9 +37,7 @@ function boardMarkup(){
 
 function update(){
   $('.l-cell').each((i, c) => {
-    // console.log($(c).data('pos').split('-'))
     let pos = $(c).data('pos').split('-').map((coor) => {return parseInt(coor)});
-    // console.log(pos)
     if(gen[pos[0]][pos[1]]){
       $(c).addClass('alive');
     }
@@ -50,21 +49,6 @@ function update(){
 
 function tick(){
  let nextGen = [];
-  // $('.l-cell').forEach((c) => {
-
-  // });
-  // gen.forEach((row) => {
-  //   nextRow = []
-  //   row.forEach((c) => {
-  //       if(survives(c)){
-  //         nextRow.push(true);
-  //       }
-  //       else{
-  //         nextRow.push(false);
-  //       }  
-  //     });
-  //   nextGen.push(nextRow);
-  // });
 
   for(let i = 0; i < gen.length; i++){
     nextGen[i] = []
@@ -77,13 +61,10 @@ function tick(){
         nextGen[i].push(false);
       }
     }
-
   }
     
     gen = nextGen;
-    update();
-    // console.log(gen)
-  
+    update();  
 }
 
 function survives(isAlive, r, c){
@@ -120,6 +101,3 @@ function survives(isAlive, r, c){
   }
 
 }
-
-
-
