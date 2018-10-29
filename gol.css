@@ -1,6 +1,5 @@
 .l-cell{
   display: table-cell;
-  border: 1px solid black;
   width: 20px;
   height: 20px;
   border-collapse: collapse;
@@ -8,4 +7,6 @@
 
 .l-cell.alive{
   background-color: black;
+  background-color: blue;
+  border-radius: 10px;
 }

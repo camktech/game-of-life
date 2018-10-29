@@ -1,6 +1,6 @@
 var gen = [];
 const gridSize = 80;
-const interval = 30;
+const interval = 50;
 
 $(document).ready(() => {
   $('#stage').append(boardMarkup());
@@ -21,7 +21,7 @@ function boardMarkup(){
       let cell = $('<div>');
       cell.addClass('l-cell');
       cell.attr('data-pos', `${i}-${j}`);
-      if(Math.random() > 0.9){
+      if(Math.random() > 0.815){
         cell.addClass('alive');
         gen[i].push(true);
       }
@@ -68,7 +68,7 @@ function tick(){
 }
 
 function survives(isAlive, r, c){
-  let liveCount = 0;
+  let liveNeighborCount = 0;
   for(let i = -1; i < 2; i++){
     for(let j = -1; j < 2; j++){
       let x = c + j;
@@ -78,32 +78,25 @@ function survives(isAlive, r, c){
         continue;
       }
 
-
-      if((c + j) < 0){
-        x = gridSize - Math.abs(c + j);
-      }
-      else if((c + j) >= gridSize){
-        x = gridSize - (c + j);
+      if(y < 0 || y >= gridSize){
+        y = gridSize - Math.abs(y); 
       }
 
-      if((r + i) < 0){
-        y = gridSize - Math.abs(r + i);
-      }
-      else if((r + i) >= gridSize){
-        y = gridSize - (r + i);
+      if(x < 0 || x >= gridSize){
+        x = gridSize - Math.abs(x); 
       }
 
       if(gen[y][x]){
-        liveCount++;
+        liveNeighborCount++;
       }
     }
   }
 
   if(isAlive){
-    if(liveCount < 2){
+    if(liveNeighborCount < 2){
       return false;
     }
-    else if(liveCount < 4){
+    else if(liveNeighborCount < 4){
       return true;
     }
     else{
@@ -111,7 +104,7 @@ function survives(isAlive, r, c){
     }
   }
   else{
-    if(liveCount === 3){
+    if(liveNeighborCount === 3){
       return true;
     }
   }
